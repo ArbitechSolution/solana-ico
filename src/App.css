@@ -36,3 +36,49 @@
     transform: rotate(360deg);
   }
 }
+
+/* CSS */
+.bgLogin {
+  background-color: #192039;
+  border: 1px solid #ffffff6f;
+  /* box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(50, 50, 50, 0.12) 0px -12px 30px, rgba(182, 182, 182, 0.12) 0px 4px 6px,
+    rgba(178, 178, 178, 0.17) 0px 12px 13px, rgb(206, 206, 206)55) 0px -3px 5px; */
+  border-radius: 5px;
+}
+.navBG {
+  box-shadow: 0px 1px 1px 0px rgba(249, 249, 249, 0.115);
+}
+
+.navbar-collapse .navbar-nav .nav-item .nav-link {
+  color: #ffffff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.navbar-collapse .navbar-nav .nav-item .nav-link :hover {
+  color: #f7c200;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.navbar-collapse .navbar-nav .nav-item :focus {
+  color: #f7c200;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+input::placeholder {
+  /* font-weight: bold; */
+  opacity: 0.9;
+  color: rgb(181, 181, 181) !important;
+}
+input {
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+input:focus {
+  background-color: transparent !important;
+  color: #fff !important;
+}
+label .form-label {
+  color: rgba(244, 244, 244, 0.801) !important;
+}
+.form-switch {
+  color: #fff;
+}
