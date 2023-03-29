@@ -1,19 +1,10 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { login } from "../../Redux/auth/actions";
+import React from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
-const LoginComponent = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+const PasswordRest = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = () => {
-    console.log("email", email);
-    console.log("password", password);
-    dispatch(login());
-    navigate("/mypage");
-  };
   return (
     <div>
       <>
@@ -24,7 +15,7 @@ const LoginComponent = () => {
                 <div className=" text-light card-signin my-5">
                   <div className="card-body bgLogin p-4 ">
                     <h5 className="card-title display-4 text-white text-center p-md-4">
-                      Sign In
+                      Reset
                     </h5>
                     <form className="form-signin my-2">
                       <div className="form-label-group  my-4">
@@ -43,28 +34,20 @@ const LoginComponent = () => {
                           type="password"
                           name="password"
                           className="form-control rounded-1 "
-                          placeholder="Password"
+                          placeholder="New password"
                           required
                           onChange={(e) => setPassword(e.target.value)}
                           value={password}
                         />
                       </div>
 
-                      <p className="d-flex  small">
-                        <Link
-                          class="text-white  text-left text-dark"
-                          to="/reset"
-                        >
-                          Forgot password?
-                        </Link>
-                      </p>
                       <div className="text-center">
                         <button
                           type="button"
-                          onClick={() => handleLogin()}
+                          onClick={() => {}}
                           className="btn btn-success text-center rounded-1 form-control text-white my-md-4"
                         >
-                          Sign In <i class="fa fa-paper-plane px-1"></i>
+                          Reset <i class="fa fa-gears px-1"></i>
                         </button>
                       </div>
                     </form>
@@ -86,4 +69,4 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;
+export default PasswordRest;

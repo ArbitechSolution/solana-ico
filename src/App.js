@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Reset from "./page/Reset";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
+          <Route path="/reset" element={<Reset />} />
           <Route
             element={<ProtectedRouting isAuthenticated={isAuthenticated} />}
           >
