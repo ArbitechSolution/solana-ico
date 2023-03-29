@@ -11,7 +11,8 @@ const LoginComponent = () => {
   const handleLogin = () => {
     console.log("email", email);
     console.log("password", password);
-    dispatch(login());
+    
+    dispatch(login({ email: email, password: password }));
     navigate("/mypage");
   };
   return (
