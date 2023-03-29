@@ -1,16 +1,18 @@
 import { ActionTypes } from "../types";
-import axios from "axios";
-export const login = async (userData) => {
+
+export const login = () => {
   return async (dispatch) => {
-    let isAuthenticated = true;
-    sessionStorage.setItem("token", userData.token);
+    let isAuthenticated = false;
+    if (sessionStorage.token) {
+      isAuthenticated = true;
+    }
+
     await dispatch({ type: ActionTypes.LOGIN, payload: isAuthenticated });
   };
 };
 export const logout = () => {
   return async (dispatch) => {
     let isAuthenticated = false;
-    sessionStorage.removeItem("token");
     await dispatch({ type: ActionTypes.LOGOUT, payload: isAuthenticated });
   };
 };

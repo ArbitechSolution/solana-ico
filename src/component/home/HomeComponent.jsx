@@ -77,14 +77,14 @@ const HomeComponent = () => {
                           type="submit"
                           className="btn btn-success text-center rounded-1 me-2 form-control text-white my-md-4"
                         >
-                          Apply <i class="fa fa-paper-plane px-1"></i>
+                          Apply <i className="fa fa-paper-plane px-1"></i>
                         </Link>
                         <Link
                           to="/"
                           type="reset"
                           className="btn btn-outline-danger text-danger text-center rounded-1 form-control text-white my-md-4"
                         >
-                          Cancel <i class="fa fa-trash-o px-1"></i>
+                          Cancel <i className="fa fa-trash-o px-1"></i>
                         </Link>
                       </div>
                     </form>

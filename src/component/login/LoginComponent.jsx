@@ -2,18 +2,24 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../Redux/auth/actions";
-
+import API from "../../config";
 const LoginComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = () => {
-    console.log("email", email);
-    console.log("password", password);
-    
-    dispatch(login({ email: email, password: password }));
-    navigate("/mypage");
+  const handleLogin = async () => {
+    try {
+      let userData = await API.post("/api/auth/login", {
+        email: email,
+        password: password,
+      });
+      sessionStorage.setItem("token", userData.data.data);
+      dispatch(login());
+      navigate("/mypage");
+    } catch (e) {
+      console.log("error while login");
+    }
   };
   return (
     <div>
@@ -52,7 +58,7 @@ const LoginComponent = () => {
                       </div>
 
                       <p className="d-flex  small">
-                        <Link class="text-white  text-left text-dark" of="/">
+                        <Link className="text-white  text-left text-dark" of="/">
                           Forgot password?
                         </Link>
                       </p>
@@ -62,7 +68,7 @@ const LoginComponent = () => {
                           onClick={() => handleLogin()}
                           className="btn btn-success text-center rounded-1 form-control text-white my-md-4"
                         >
-                          Sign In <i class="fa fa-paper-plane px-1"></i>
+                          Sign In <i className="fa fa-paper-plane px-1"></i>
                         </button>
                       </div>
                     </form>
