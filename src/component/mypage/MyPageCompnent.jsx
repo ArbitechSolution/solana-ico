@@ -83,8 +83,11 @@ const MyPageCompnent = () => {
               <table className="table table-bordered  border-secondary text-white">
                 <thead className="text-warning ">
                   <tr>
-                    <th colSpan={3} scope="col" className="display-6">
+                    <th colSpan={1} scope="col" className="display-6">
                       MY BASIC INFORMATION
+                    </th>
+                    <th className="text-center ">
+                      <ModelInfo />
                     </th>
                   </tr>
                 </thead>
@@ -92,9 +95,6 @@ const MyPageCompnent = () => {
                   <tr>
                     <td>ID</td>
                     <td>HONG</td>
-                    <td rowSpan={4} className="text-center ">
-                      <ModelInfo />
-                    </td>
                   </tr>
                   <tr>
                     <td>PHONE</td>
