@@ -108,6 +108,17 @@ const MyPageCompnent = () => {
                     <td>otp</td>
                     <td>off</td>
                   </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      Referral Link :
+                      Bs3g7s9KKQyJiVWy9guAVfiXQrVK6n7b5botezdMm8xr
+                      <span className="px-2">
+                        <a className="btn btn-sm text-white btn-warning">
+                          <i class="fa fa-clone"></i>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>

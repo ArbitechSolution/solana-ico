@@ -10,7 +10,7 @@ const ModelDepositeAdress = () => {
         data-bs-target="#AdressUpdate"
         data-bs-whatever="@mdo"
       >
-        MODIFY
+        <i class="fa fa-edit "></i>
       </button>
       <div
         className="modal fade"

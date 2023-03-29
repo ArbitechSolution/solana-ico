@@ -5,13 +5,12 @@ const ModelInfo = () => {
     <div>
       <button
         type="button"
-    
         className="btn btn-sm btn-warning text-white"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
         data-bs-whatever="@mdo"
       >
-        MODIFY
+        <i class="fa fa-edit "></i>
       </button>
       <div
         className="modal fade"
