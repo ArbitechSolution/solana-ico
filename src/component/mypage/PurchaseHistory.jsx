@@ -7,7 +7,7 @@ const PurchaseHistory = () => {
         <div className="col-lg-12 text-sm-center">
           <div className="table-responsive-sm">
             <div style={{ overflowX: "auto" }}>
-              <table className="table table-bordered border-secondary text-white">
+              <table className="table ScrollTable table-bordered border-secondary text-white">
                 <tbody className="text-start">
                   <tr className="text-warning text-center">
                     <th colSpan={5} scope="col" className="display-6 ">

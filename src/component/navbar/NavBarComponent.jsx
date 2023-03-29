@@ -1,7 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../Redux/auth/actions";
 
 const NavBarComponent = () => {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
   return (
     <nav class="navbar navbar-expand-lg navbar-dark navBG py-md-4 ">
       <div class="container">
@@ -42,14 +51,30 @@ const NavBarComponent = () => {
               </Link>
             </li>
             <li class="nav-item">
-              <Link class="nav-link" to="/login">
-                <span
-                  data-bs-target="#navbarSupportedContent"
-                  data-bs-toggle="collapse"
+              {isAuthenticated ? (
+                <Link
+                  class="nav-link"
+                  onClick={() => {
+                    handleLogout();
+                  }}
                 >
-                  Login
-                </span>
-              </Link>
+                  <span
+                    data-bs-target="#navbarSupportedContent"
+                    data-bs-toggle="collapse"
+                  >
+                    Logout
+                  </span>
+                </Link>
+              ) : (
+                <Link class="nav-link" to="/login">
+                  <span
+                    data-bs-target="#navbarSupportedContent"
+                    data-bs-toggle="collapse"
+                  >
+                    Login
+                  </span>
+                </Link>
+              )}
             </li>
             <li class="nav-item">
               <Link class="nav-link" to="/mypage">

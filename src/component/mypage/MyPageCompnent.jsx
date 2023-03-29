@@ -1,5 +1,6 @@
 import React from "react";
 import DepositeWalletAdress from "./DepositeWalletAdress";
+import ModelInfo from "./ModelInfo";
 import PurchaseHistory from "./PurchaseHistory";
 import RefrelCashReward from "./RefrelCashReward";
 
@@ -9,11 +10,14 @@ const MyPageCompnent = () => {
       <div>
         <div className="container col-xl-10 col-xxl-8 px-4 py-5">
           <div className="row d-flex align-items-center g-lg-5 py-3">
-            <div className="col-lg-6  text-center">
-              <table class="table table-bordered border-secondary text-white">
+            <div
+              className="col-lg-6  text-center"
+              style={{ overflowX: "auto" }}
+            >
+              <table className="table table-bordered border-secondary text-white">
                 <thead className="text-warning">
                   <tr>
-                    <th scope="col" colspan="2" className="display-6 ">
+                    <th scope="col" colSpan="2" className="display-6 ">
                       MY BALANCE
                     </th>
                   </tr>
@@ -38,11 +42,14 @@ const MyPageCompnent = () => {
                 </tbody>
               </table>
             </div>
-            <div className="col-lg-6 text-center">
-              <table class="table table-bordered border-secondary text-white">
+            <div
+              className="col-lg-6  text-center"
+              style={{ overflowX: "auto" }}
+            >
+              <table className="table table-bordered border-secondary text-white">
                 <thead className="text-warning">
                   <tr>
-                    <th scope="col" colspan="2" className="display-6 ">
+                    <th scope="col" colSpan="2" className="display-6 ">
                       MY REWARD
                     </th>
                   </tr>
@@ -69,8 +76,11 @@ const MyPageCompnent = () => {
             </div>
           </div>
           <div className="row d-flex align-items-center g-lg-5 py-3">
-            <div className="col-lg-12 text-center">
-              <table class="table table-bordered border-secondary text-white">
+            <div
+              className="col-lg-12 text-center"
+              style={{ overflowX: "auto" }}
+            >
+              <table className="table table-bordered  border-secondary text-white">
                 <thead className="text-warning ">
                   <tr>
                     <th colSpan={3} scope="col" className="display-6">
@@ -81,11 +91,9 @@ const MyPageCompnent = () => {
                 <tbody className="text-start">
                   <tr>
                     <td>ID</td>
-                    <td> HONG</td>
+                    <td>HONG</td>
                     <td rowSpan={4} className="text-center ">
-                      <button className="btn btn-sm btn-warning text-white">
-                        MODIFY
-                      </button>
+                      <ModelInfo />
                     </td>
                   </tr>
                   <tr>

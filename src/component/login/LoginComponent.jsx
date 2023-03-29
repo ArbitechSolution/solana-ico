@@ -1,7 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../Redux/auth/actions";
 
 const LoginComponent = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = () => {
+    console.log("email", email);
+    console.log("password", password);
+    dispatch(login());
+    navigate("/mypage");
+  };
   return (
     <div>
       <>
@@ -22,6 +34,8 @@ const LoginComponent = () => {
                           className="form-control rounded-1 mb-4"
                           placeholder="Enter email"
                           required
+                          onChange={(e) => setEmail(e.target.value)}
+                          value={email}
                         />
                       </div>
                       <div className="form-label-group  my-2">
@@ -31,29 +45,31 @@ const LoginComponent = () => {
                           className="form-control rounded-1 "
                           placeholder="Password"
                           required
+                          onChange={(e) => setPassword(e.target.value)}
+                          value={password}
                         />
                       </div>
 
-                      <p class="d-flex  small">
+                      <p className="d-flex  small">
                         <Link class="text-white  text-left text-dark" of="/">
                           Forgot password?
                         </Link>
                       </p>
                       <div className="text-center">
-                        <Link
-                          to="/"
-                          type="submit"
+                        <button
+                          type="button"
+                          onClick={() => handleLogin()}
                           className="btn btn-success text-center rounded-1 form-control text-white my-md-4"
                         >
                           Sign In <i class="fa fa-paper-plane px-1"></i>
-                        </Link>
+                        </button>
                       </div>
                     </form>
 
                     <small className="text-white ">
                       Don't have an account?{" "}
                     </small>
-                    <Link to="/join" type="submit" className="text-warning">
+                    <Link to="/join" type="button" className="text-warning">
                       Register
                     </Link>
                   </div>

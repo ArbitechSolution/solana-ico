@@ -82,3 +82,9 @@ label .form-label {
 .form-switch {
   color: #fff;
 }
+.ScrollTable td,
+th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

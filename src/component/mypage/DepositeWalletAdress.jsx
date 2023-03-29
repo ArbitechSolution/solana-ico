@@ -1,4 +1,5 @@
 import React from "react";
+import ModelDepositeAdress from "./ModelDepositeAdress";
 
 const DepositeWalletAdress = () => {
   return (
@@ -16,15 +17,19 @@ const DepositeWalletAdress = () => {
                   </tr>
                   <tr className=" text-start">
                     <td>
-                      <span> Bs3g7s9KKQyJiVWy9guAVfiXQrVK6n7b5botezdMm8xr</span>
+                      <span className="text-break ">
+                        {" "}
+                        Bs3g7s9KKQyJiVWy9guAVfiXQrVK6n7b5botezdMm8xr
+                      </span>
                     </td>
                     <th
                       scope="col"
                       className="d-sm-flex justify-content-center"
                     >
-                      <button className="btn btn-sm btn-warning text-white">
+                      {/* <button className="btn btn-sm btn-warning text-white">
                         MODIFY
-                      </button>
+                      </button> */}
+                      <ModelDepositeAdress />
                     </th>
                   </tr>
                 </tbody>

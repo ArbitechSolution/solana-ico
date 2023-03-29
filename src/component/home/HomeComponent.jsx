@@ -16,7 +16,7 @@ const HomeComponent = () => {
                     </h5>
                     <form className="form-signin my-2 text-start">
                       <div className="form-label-group">
-                        <label for="amount" class="form-label d-flex ">
+                        <label for="amount" className="form-label d-flex ">
                           Enter the desired coin purchase amount
                         </label>
                         <input
@@ -29,7 +29,7 @@ const HomeComponent = () => {
                       </div>
 
                       <div className="form-label-group">
-                        <label for="code" class="form-label d-flex ">
+                        <label for="code" className="form-label d-flex ">
                           If you have a referral invitation code, please enter
                           it.
                         </label>
@@ -41,7 +41,7 @@ const HomeComponent = () => {
                         />
                       </div>
                       <div className="form-label-group">
-                        <label for="Adress" class="form-label d-flex ">
+                        <label for="Adress" className="form-label d-flex ">
                           Enter the coin address to be paid
                         </label>
                         <input
@@ -52,7 +52,7 @@ const HomeComponent = () => {
                         />
                       </div>
                       <div
-                        class="alert alert-info alert-dismissible fade show text-start "
+                        className="alert alert-info alert-dismissible fade show text-start "
                         role="alert"
                       >
                         <span className="small">
@@ -65,17 +65,12 @@ const HomeComponent = () => {
                         </span>
                         <button
                           type="button"
-                          class="btn-close"
+                          className="btn-close"
                           data-bs-dismiss="alert"
                           aria-label="Close"
                         ></button>
                       </div>
 
-                      {/* <p class="d-flex  small">
-                        <Link class="text-primary  text-left text-dark" of="/">
-                          Forgot password?
-                        </Link>
-                      </p> */}
                       <div className="text-center d-flex">
                         <Link
                           to="/login"
