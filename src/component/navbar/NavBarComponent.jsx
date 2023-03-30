@@ -8,7 +8,7 @@ const NavBarComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
-    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
     dispatch(logout());
     navigate("/");
   };

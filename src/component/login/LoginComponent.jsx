@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../Redux/auth/actions";
 import API from "../../config";
@@ -8,14 +8,15 @@ const LoginComponent = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const handleLogin = async () => {
     try {
       let userData = await API.post("/api/auth/login", {
         email: email,
         password: password,
       });
-      sessionStorage.setItem("token", userData.data.data);
-      dispatch(login());
+      localStorage.setItem("token", userData.data.data.token);
+      dispatch(login(userData.data.data));
       navigate("/mypage");
     } catch (e) {
       console.log("error while login");
@@ -58,7 +59,10 @@ const LoginComponent = () => {
                       </div>
 
                       <p className="d-flex  small">
-                        <Link className="text-white  text-left text-dark" of="/">
+                        <Link
+                          className="text-white  text-left text-dark"
+                          of="/"
+                        >
                           Forgot password?
                         </Link>
                       </p>

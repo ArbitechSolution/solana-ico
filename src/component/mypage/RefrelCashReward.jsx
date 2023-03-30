@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import API from "../../config";
 
 const RefrelCashReward = () => {
+  const { userData } = useSelector((state) => state.auth);
+  const [referralSummary, setReferralSummary] = useState([]);
+  const handlePurchasehistory = async () => {
+    try {
+      let user = await API.post(
+        `/user/getReferralCashRewards/${userData.user.id}`
+      );
+      console.log("user", user);
+      setReferralSummary(user.data.referralCashRewards);
+    } catch (e) {
+      console.log("error while getting info");
+    }
+  };
+  useEffect(() => {
+    setTimeout(() => {
+      handlePurchasehistory();
+    }, 300);
+  }, []);
   return (
     <>
       <div className="row d-flex align-items-center g-lg-5 py-3">
@@ -22,55 +42,28 @@ const RefrelCashReward = () => {
                     <th scope="col">STATUS</th>
                     <th scope="col">WITHDRAW</th>
                   </tr>
-
-                  <tr>
-                    <td>Mar 20, 2023 14:00</td>
-                    <td>Admiral Yi</td>
-                    <td> 50,000,000</td>
-                    <td> 5,000</td>
-                    <td>DEPOSIT PENDING</td>
-                    <td>
-                      <button className="btn btn-sm btn-warning disabled text-white">
-                        WITHDRAW
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Mar 20, 2023 14:00</td>
-                    <td>Admiral Yi</td>
-                    <td> 50,000,000</td>
-                    <td> 5,000</td>
-                    <td>LOCKUP</td>
-                    <td>
-                      <button className="btn btn-sm btn-warning disabled text-white">
-                        WITHDRAW
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Mar 20, 2023 14:00</td>
-                    <td>Admiral Yi</td>
-                    <td> 50,000,000</td>
-                    <td> 5,000</td>
-                    <td>WITHDRAWL AVAILABLE</td>
-                    <td>
-                      <button className="btn btn-sm btn-warning text-white">
-                        WITHDRAW
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Mar 20, 2023 14:00</td>
-                    <td>Admiral Yi</td>
-                    <td> 50,000,000</td>
-                    <td> 5,000</td>
-                    <td>WITHDRAWL COMPLETE</td>
-                    <td>
-                      <button className="btn btn-sm btn-warning disabled text-white">
-                        WITHDRAW
-                      </button>
-                    </td>
-                  </tr>
+                  {referralSummary.map((item, key) => {
+                    return (
+                      <tr>
+                        <td>Mar 20, 2023 14:00</td>
+                        <td>{item.referredTo.fullName}</td>
+                        <td> {item.depositedWon}</td>
+                        <td> {item.myReward}</td>
+                        <td>
+                          {item.status == 0
+                            ? "pending"
+                            : item.status == 1
+                            ? "locked"
+                            : "withdrawAvailable"}
+                        </td>
+                        <td>
+                          <button className="btn btn-sm btn-warning disabled text-white">
+                            WITHDRAW
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
