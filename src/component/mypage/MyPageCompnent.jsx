@@ -11,6 +11,7 @@ const MyPageCompnent = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [userReward, setUserReward] = useState([]);
   const [userBalance, setUserBalance] = useState([]);
+
   const handleUserInfo = async () => {
     try {
       let user = await API.post(`/api/auth/getUserInfo/${userData.user.id}`);
@@ -23,9 +24,13 @@ const MyPageCompnent = () => {
     try {
       let user = await API.post(
         `/user/getReferralRewardSummary/${userData.user.id}`
-      );
-      console.log("sssss", user.data);
-      setUserReward(user.data);
+      ).then((response) => {
+        if (response.status == 200) {
+          setUserReward(response.data.rewardSummary);
+        } else {
+          setUserReward([]);
+        }
+      });
     } catch (e) {
       console.log("error while getting info");
     }
@@ -34,12 +39,22 @@ const MyPageCompnent = () => {
     try {
       let user = await API.post(
         `/user/getTokenPurchaseSummary/${userData.user.id}`
-      );
-      console.log("balacnce", user.data);
-
-      setUserBalance(user.data);
+      )
+        .then((response) => {
+          if (response.status == 200) {
+            setUserBalance(response.data);
+          } else if (response.status == 401) {
+            setUserBalance([]);
+          } else {
+            setUserBalance([]);
+          }
+        })
+        .catch((error) => {
+          console.log(error, "error of getting");
+          setUserBalance([]);
+        });
     } catch (e) {
-      console.log("error while getting info");
+      console.log("error while getting balance");
     }
   };
   useEffect(() => {
@@ -69,19 +84,19 @@ const MyPageCompnent = () => {
                 <tbody className="text-start">
                   <tr>
                     <td>Total Purchased Token</td>
-                    <td> 1,000,000</td>
+                    <td> {userBalance.totalPurchasedToken || 0}</td>
                   </tr>
                   <tr>
                     <td>Total UnLockup Tokens</td>
-                    <td> 5,000</td>
+                    <td> {userBalance.totalUnLockupTokens || 0}</td>
                   </tr>
                   <tr>
                     <td>Available To Withdraw</td>
-                    <td> 1,000</td>
+                    <td> {userBalance.availableToWithdraw || 0}</td>
                   </tr>
                   <tr>
                     <td>Total Deposit Pending</td>
-                    <td> 4,000 </td>
+                    <td> {userBalance.totalDepositPending || 0} </td>
                   </tr>
                 </tbody>
               </table>
@@ -100,20 +115,20 @@ const MyPageCompnent = () => {
                 </thead>
                 <tbody className="text-start">
                   <tr>
-                    <td>referral cash reward</td>
+                    <td>Total Pending Reward</td>
+                    <td> {userReward.totalPendingReward}</td>
+                  </tr>
+                  <tr>
+                    <td>Total UnLockup Quantity</td>
+                    <td> {userReward.totalUnLockupQuantity}</td>
+                  </tr>
+                  <tr>
+                    <td>Available Reward</td>
+                    <td> {userReward.availableReward}</td>
+                  </tr>
+                  <tr>
+                    <td>Total Reward Received</td>
                     <td> {userReward.totalRewardReceived}</td>
-                  </tr>
-                  <tr>
-                    <td>token quantity</td>
-                    <td> 5,000,000</td>
-                  </tr>
-                  <tr>
-                    <td>lock up quantity</td>
-                    <td> 1,000,000</td>
-                  </tr>
-                  <tr>
-                    <td>unlock up quantity</td>
-                    <td> 4,000,000</td>
                   </tr>
                 </tbody>
               </table>
@@ -131,7 +146,7 @@ const MyPageCompnent = () => {
                       MY BASIC INFORMATION
                     </th>
                     <th className="text-center ">
-                      <ModelInfo />
+                      <ModelInfo userInfo={userInfo} />
                     </th>
                   </tr>
                 </thead>

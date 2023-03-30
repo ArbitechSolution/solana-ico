@@ -10,7 +10,6 @@ const RefrelCashReward = () => {
       let user = await API.post(
         `/user/getReferralCashRewards/${userData.user.id}`
       );
-      console.log("user", user);
       setReferralSummary(user.data.referralCashRewards);
     } catch (e) {
       console.log("error while getting info");
@@ -51,13 +50,21 @@ const RefrelCashReward = () => {
                         <td> {item.myReward}</td>
                         <td>
                           {item.status == 0
-                            ? "pending"
+                            ? "Deposit Pending"
                             : item.status == 1
-                            ? "locked"
-                            : "withdrawAvailable"}
+                            ? "lockedUp"
+                            : item.status == 2
+                            ? "Withdraw Available"
+                            : item.status == 3
+                            ? "Withdraw Pending"
+                            : "Withdraw Compelete"}
                         </td>
                         <td>
-                          <button className="btn btn-sm btn-warning disabled text-white">
+                          <button
+                            className={`btn btn-sm btn-warning ${
+                              item.status == 2 ? "" : "disabled"
+                            } text-white`}
+                          >
                             WITHDRAW
                           </button>
                         </td>

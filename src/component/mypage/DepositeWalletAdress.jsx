@@ -1,5 +1,6 @@
 import React from "react";
 import ModelDepositeAdress from "./ModelDepositeAdress";
+import ModalOtp from "./modelOtp";
 
 const DepositeWalletAdress = ({ userInfo: userInfo }) => {
   return (
@@ -25,7 +26,8 @@ const DepositeWalletAdress = ({ userInfo: userInfo }) => {
                       scope="col"
                       className="d-sm-flex justify-content-center"
                     >
-                      <ModelDepositeAdress />
+                      <ModalOtp userInfo={userInfo} />
+                      {/* <ModelDepositeAdress userInfo={userInfo} /> */}
                     </th>
                   </tr>
                 </tbody>

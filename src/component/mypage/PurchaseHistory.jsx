@@ -10,7 +10,6 @@ const PurchaseHistory = () => {
       let user = await API.post(
         `/user/getUserPurchaseHistory/${userData.user.id}`
       );
-      console.log("user", user);
       setPurchasehistory(user.data.userPurchaseHistory);
     } catch (e) {
       console.log("error while getting info");
@@ -49,13 +48,21 @@ const PurchaseHistory = () => {
                         <td> {item.coinAmount}</td>
                         <td>
                           {item.status == 0
-                            ? "pending"
+                            ? "Deposit Pending"
                             : item.status == 1
-                            ? "locked"
-                            : "withdrawAvailable"}
+                            ? "lockedUp"
+                            : item.status == 2
+                            ? "Withdraw Available"
+                            : item.status == 3
+                            ? "Withdraw Pending"
+                            : "Withdraw Compelete"}
                         </td>
                         <td>
-                          <button className="btn btn-sm btn-warning disabled text-white">
+                          <button
+                            className={`btn btn-sm btn-warning ${
+                              item.status == 2 ? "" : "disabled"
+                            } text-white`}
+                          >
                             WITHDRAW
                           </button>
                         </td>

@@ -1,6 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import API from "../../config";
 
-const ModelInfo = () => {
+const ModelInfo = ({ userInfo: userInfo }) => {
+  console.log("userInfo", userInfo);
+  const navigate = useNavigate();
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const handleUserUpdate = async () => {
+    try {
+      let user = await API.post(`/api/auth/updateUserDetails`, {
+        user_id: userInfo._id,
+        fullName: fullName,
+        phoneNumber: phoneNumber,
+        email: email,
+      });
+      navigate("/mypage");
+      console.log("user", user);
+    } catch (e) {
+      console.log("error while getting info");
+    }
+  };
+  useEffect(() => {
+    setFullName(userInfo.fullName);
+    setEmail(userInfo.email);
+    setPhoneNumber(userInfo.phoneNumber);
+  }, [userInfo]);
   return (
     <div>
       <button
@@ -33,8 +59,12 @@ const ModelInfo = () => {
                     type="text"
                     name="id"
                     className="form-control rounded-1 mb-4"
-                    placeholder="ID"
+                    placeholder="full name"
                     required
+                    value={fullName}
+                    onChange={(e) => {
+                      setFullName(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="form-label-group  my-4">
@@ -44,6 +74,10 @@ const ModelInfo = () => {
                     className="form-control rounded-1 mb-4"
                     placeholder="Phone"
                     required
+                    value={phoneNumber}
+                    onChange={(e) => {
+                      setPhoneNumber(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="form-label-group  my-4">
@@ -53,9 +87,13 @@ const ModelInfo = () => {
                     className="form-control rounded-1 mb-4"
                     placeholder="Email"
                     required
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
                   />
                 </div>
-                <div className="form-label-group  my-4">
+                {/* <div className="form-label-group  my-4">
                   <input
                     type="text"
                     name="code"
@@ -63,7 +101,7 @@ const ModelInfo = () => {
                     placeholder="Otp"
                     required
                   />
-                </div>
+                </div> */}
               </form>
             </div>
             <div className="modal-footer">
@@ -74,7 +112,14 @@ const ModelInfo = () => {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-success">
+              <button
+                type="button"
+                className="btn btn-success"
+                data-bs-dismiss="modal"
+                onClick={() => {
+                  handleUserUpdate();
+                }}
+              >
                 Update
               </button>
             </div>

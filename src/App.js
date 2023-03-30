@@ -11,6 +11,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Reset from "./page/Reset";
 import ConfirmOtp from "./component/login/ConfirmOtp";
+import ModelDepositeAdress from "./component/mypage/ModelDepositeAdress";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -28,6 +29,10 @@ function App() {
             element={<ProtectedRouting isAuthenticated={isAuthenticated} />}
           >
             <Route path="/mypage" element={<MyPage />} />
+            <Route
+              path="/updateWalletAddress"
+              element={<ModelDepositeAdress />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
