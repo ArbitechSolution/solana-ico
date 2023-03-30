@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import won from "../../assets/imges/won.png";
 
 const HomeComponent = () => {
   return (
@@ -19,15 +20,40 @@ const HomeComponent = () => {
                         <label for="amount" className="form-label d-flex ">
                           Enter the desired coin purchase amount
                         </label>
-                        <input
-                          type="text"
-                          name="amount"
-                          className=" form-control rounded-1 mb-4"
-                          placeholder="Enter amount"
-                          required
-                        />
+                        <div className="input-group mb-3">
+                          <span
+                            className="input-group-text bg-secondary"
+                            id="basic-addon1"
+                          >
+                            <img
+                              className="img-fluid"
+                              alt="won"
+                              src={won}
+                              width={"20px"}
+                            />
+                          </span>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Enter amount"
+                            aria-label="Enteramount"
+                            aria-describedby="basic-addon1"
+                          />
+                        </div>
                       </div>
 
+                      <div className="form-label-group">
+                        <label for="Adress" className="form-label d-flex ">
+                          Enter estimated token amount
+                        </label>
+                        <input
+                          type="text"
+                          name="tokenAmount"
+                          className=" form-control rounded-1 mb-4"
+                          placeholder="00000"
+                          readOnly
+                        />
+                      </div>
                       <div className="form-label-group">
                         <label for="code" className="form-label d-flex ">
                           If you have a referral invitation code, please enter
@@ -38,17 +64,6 @@ const HomeComponent = () => {
                           name="code"
                           className=" form-control rounded-1 mb-4"
                           placeholder="Enter code"
-                        />
-                      </div>
-                      <div className="form-label-group">
-                        <label for="Adress" className="form-label d-flex ">
-                          Enter the coin address to be paid
-                        </label>
-                        <input
-                          type="text"
-                          name="Adress"
-                          className=" form-control rounded-1 mb-4"
-                          placeholder="Enter Adress"
                         />
                       </div>
                       <div

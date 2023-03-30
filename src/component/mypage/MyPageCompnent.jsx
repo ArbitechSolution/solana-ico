@@ -24,7 +24,8 @@ const MyPageCompnent = () => {
       let user = await API.post(
         `/user/getReferralRewardSummary/${userData.user.id}`
       );
-      setUserReward(user.data.rewardSummary);
+      console.log("sssss", user.data);
+      setUserReward(user.data);
     } catch (e) {
       console.log("error while getting info");
     }
@@ -32,9 +33,11 @@ const MyPageCompnent = () => {
   const handleUserBalance = async () => {
     try {
       let user = await API.post(
-        `/user/getReferralRewardSummary/${userData.user.id}`
+        `/user/getTokenPurchaseSummary/${userData.user.id}`
       );
-      setUserReward(user.data.rewardSummary);
+      console.log("balacnce", user.data);
+
+      setUserBalance(user.data);
     } catch (e) {
       console.log("error while getting info");
     }
@@ -43,6 +46,7 @@ const MyPageCompnent = () => {
     setTimeout(() => {
       handleUserInfo();
       handleUserReward();
+      handleUserBalance();
     }, 300);
   }, []);
   return (
@@ -64,19 +68,19 @@ const MyPageCompnent = () => {
                 </thead>
                 <tbody className="text-start">
                   <tr>
-                    <td>token purchase amount(won)</td>
+                    <td>Total Purchased Token</td>
                     <td> 1,000,000</td>
                   </tr>
                   <tr>
-                    <td>token quantity</td>
+                    <td>Total UnLockup Tokens</td>
                     <td> 5,000</td>
                   </tr>
                   <tr>
-                    <td>lock up quantity</td>
+                    <td>Available To Withdraw</td>
                     <td> 1,000</td>
                   </tr>
                   <tr>
-                    <td>unlock up quantity</td>
+                    <td>Total Deposit Pending</td>
                     <td> 4,000 </td>
                   </tr>
                 </tbody>
@@ -123,8 +127,11 @@ const MyPageCompnent = () => {
               <table className="table table-bordered  border-secondary text-white">
                 <thead className="text-warning ">
                   <tr>
-                    <th colSpan={3} scope="col" className="display-6">
+                    <th colSpan={1} scope="col" className="display-6">
                       MY BASIC INFORMATION
+                    </th>
+                    <th className="text-center ">
+                      <ModelInfo />
                     </th>
                   </tr>
                 </thead>
@@ -133,9 +140,6 @@ const MyPageCompnent = () => {
                   <tr>
                     <td>ID</td>
                     <td>{userInfo._id}</td>
-                    <td rowSpan={4} className="text-center ">
-                      <ModelInfo />
-                    </td>
                   </tr>
                   <tr>
                     <td>PHONE</td>
@@ -148,6 +152,17 @@ const MyPageCompnent = () => {
                   <tr>
                     <td>otp</td>
                     <td>off</td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      Referral Link :
+                      Bs3g7s9KKQyJiVWy9guAVfiXQrVK6n7b5botezdMm8xr
+                      <span className="px-2">
+                        <a className="btn btn-sm text-white btn-outline-warning">
+                          <i class="fa fa-clone"></i>
+                        </a>
+                      </span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
