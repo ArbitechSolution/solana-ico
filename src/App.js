@@ -1,3 +1,4 @@
+import React from "react";
 import Navbar from "../src/page/navBar";
 import Login from "./page/Login";
 import Join from "./page/Join";
@@ -9,10 +10,10 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Reset from "./page/Reset";
+import ConfirmOtp from "./component/login/ConfirmOtp";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log(isAuthenticated, "auth");
   return (
     <div className="App">
       <BrowserRouter>
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
           <Route path="/reset" element={<Reset />} />
+          <Route path="/confirmpassword" element={<ConfirmOtp />} />
           <Route
             element={<ProtectedRouting isAuthenticated={isAuthenticated} />}
           >

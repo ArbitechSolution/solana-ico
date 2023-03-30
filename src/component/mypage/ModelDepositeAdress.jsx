@@ -5,7 +5,7 @@ const ModelDepositeAdress = () => {
     <div>
       <button
         type="button"
-        className="btn btn-sm btn-warning text-white"
+        className="btn btn-sm btn-outline-warning text-white"
         data-bs-toggle="modal"
         data-bs-target="#AdressUpdate"
         data-bs-whatever="@mdo"

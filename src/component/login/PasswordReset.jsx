@@ -15,7 +15,7 @@ const PasswordRest = () => {
                 <div className=" text-light card-signin my-5">
                   <div className="card-body bgLogin p-4 ">
                     <h5 className="card-title display-4 text-white text-center p-md-4">
-                      Reset
+                      Request Otp
                     </h5>
                     <form className="form-signin my-2">
                       <div className="form-label-group  my-4">
@@ -29,35 +29,18 @@ const PasswordRest = () => {
                           value={email}
                         />
                       </div>
-                      <div className="form-label-group  my-2">
-                        <input
-                          type="password"
-                          name="password"
-                          className="form-control rounded-1 "
-                          placeholder="New password"
-                          required
-                          onChange={(e) => setPassword(e.target.value)}
-                          value={password}
-                        />
-                      </div>
 
                       <div className="text-center">
-                        <button
+                        <Link
                           type="button"
                           onClick={() => {}}
+                          to="/confirmpassword"
                           className="btn btn-success text-center rounded-1 form-control text-white my-md-4"
                         >
-                          Reset <i class="fa fa-gears px-1"></i>
-                        </button>
+                          Send Otp <i className="fa fa-paper-plane px-1"></i>
+                        </Link>
                       </div>
                     </form>
-
-                    <small className="text-white ">
-                      Don't have an account?{" "}
-                    </small>
-                    <Link to="/join" type="button" className="text-warning">
-                      Register
-                    </Link>
                   </div>
                 </div>
               </div>

@@ -1,10 +1,13 @@
 import { ActionTypes } from "../types";
+
 export const login = () => {
-  // const navigate = useNavigate();
   return async (dispatch) => {
-    let isAuthenticated = true;
+    let isAuthenticated = false;
+    if (sessionStorage.token) {
+      isAuthenticated = true;
+    }
+
     await dispatch({ type: ActionTypes.LOGIN, payload: isAuthenticated });
-    // navigate("/mypage");
   };
 };
 export const logout = () => {

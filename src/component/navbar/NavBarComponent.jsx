@@ -8,17 +8,18 @@ const NavBarComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
+    sessionStorage.removeItem("token");
     dispatch(logout());
     navigate("/");
   };
   return (
-    <nav class="navbar navbar-expand-lg navbar-dark navBG py-md-4 ">
-      <div class="container">
-        <a class="navbar-brand" href="/">
+    <nav className="navbar navbar-expand-lg navbar-dark navBG py-md-4 ">
+      <div className="container">
+        <a className="navbar-brand" href="/">
           COIN BUY
         </a>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
@@ -28,62 +29,37 @@ const NavBarComponent = () => {
         >
           <i className="fa fa-bars" />
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <Link class="nav-link" to="/">
-                <span
-                  data-bs-target="#navbarSupportedContent"
-                  data-bs-toggle="collapse"
-                >
-                  Home
-                </span>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">
+                <span data-bs-target="#navbarSupportedContent">Home</span>
               </Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/join">
-                <span
-                  data-bs-target="#navbarSupportedContent"
-                  data-bs-toggle="collapse"
-                >
-                  Join
-                </span>
+            <li className="nav-item">
+              <Link className="nav-link" to="/join">
+                <span data-bs-target="#navbarSupportedContent">Join</span>
               </Link>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               {isAuthenticated ? (
                 <Link
-                  class="nav-link"
+                  className="nav-link"
                   onClick={() => {
                     handleLogout();
                   }}
                 >
-                  <span
-                    data-bs-target="#navbarSupportedContent"
-                    data-bs-toggle="collapse"
-                  >
-                    Logout
-                  </span>
+                  <span data-bs-target="#navbarSupportedContent">Logout</span>
                 </Link>
               ) : (
-                <Link class="nav-link" to="/login">
-                  <span
-                    data-bs-target="#navbarSupportedContent"
-                    data-bs-toggle="collapse"
-                  >
-                    Login
-                  </span>
+                <Link className="nav-link" to="/login">
+                  <span data-bs-target="#navbarSupportedContent">Login</span>
                 </Link>
               )}
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/mypage">
-                <span
-                  data-bs-target="#navbarSupportedContent"
-                  data-bs-toggle="collapse"
-                >
-                  My Page
-                </span>
+            <li className="nav-item">
+              <Link className="nav-link" to="/mypage">
+                <span data-bs-target="#navbarSupportedContent">My Page</span>
               </Link>
             </li>
           </ul>

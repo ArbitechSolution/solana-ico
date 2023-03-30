@@ -113,7 +113,7 @@ const MyPageCompnent = () => {
                       Referral Link :
                       Bs3g7s9KKQyJiVWy9guAVfiXQrVK6n7b5botezdMm8xr
                       <span className="px-2">
-                        <a className="btn btn-sm text-white btn-warning">
+                        <a className="btn btn-sm text-white btn-outline-warning">
                           <i class="fa fa-clone"></i>
                         </a>
                       </span>
