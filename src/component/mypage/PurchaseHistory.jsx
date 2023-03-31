@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import API from "../../config";
+import ModalOtp from "./otpForWithdraw";
 
 const PurchaseHistory = () => {
   const { userData } = useSelector((state) => state.auth);
   const [purchaseHistory, setPurchasehistory] = useState([]);
+  const navigate = useNavigate();
   const handlePurchasehistory = async () => {
     try {
       let user = await API.post(
@@ -20,6 +23,9 @@ const PurchaseHistory = () => {
       handlePurchasehistory();
     }, 300);
   }, []);
+  const handleWithdraw = (index) => {
+    navigate("/otpforWithdraw");
+  };
   return (
     <>
       <div className="row d-flex text-center align-items-center  g-lg-5 py-3">
@@ -60,8 +66,11 @@ const PurchaseHistory = () => {
                         <td>
                           <button
                             className={`btn btn-sm btn-warning ${
-                              item.status == 2 ? "" : "disabled"
+                              item.status != 2 ? "" : "disabled"
                             } text-white`}
+                            onClick={() => {
+                              handleWithdraw();
+                            }}
                           >
                             WITHDRAW
                           </button>

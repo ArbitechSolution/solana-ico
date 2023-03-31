@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../Redux/auth/actions";
 import API from "../../config";
+import { toast } from "react-toastify";
+
 const LoginComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ const LoginComponent = () => {
       localStorage.setItem("token", userData.data.data.token);
       dispatch(login(userData.data.data));
       navigate("/mypage");
+      toast.success("Login successfully");
     } catch (e) {
       console.log("error while login");
     }
@@ -61,7 +64,7 @@ const LoginComponent = () => {
                       <p className="d-flex  small">
                         <Link
                           className="text-white  text-left text-dark"
-                          of="/"
+                          to="/reset"
                         >
                           Forgot password?
                         </Link>

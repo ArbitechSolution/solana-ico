@@ -1,24 +1,22 @@
-import React from "react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../../config";
 
-const PasswordRest = () => {
+const ModalOtp = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const handleSendOtp = async () => {
     try {
       await API.post(`/api/auth/sendOtp`, {
         email: email,
-        type: "reset",
+        type: "withdrawPurchasedToken",
       });
-      localStorage.setItem("email", email);
-      toast.success("OTP sent");
+      navigate("/purchase");
     } catch (e) {
       console.log("error while getting info");
     }
   };
+
   return (
     <div>
       <>
@@ -66,4 +64,4 @@ const PasswordRest = () => {
   );
 };
 
-export default PasswordRest;
+export default ModalOtp;

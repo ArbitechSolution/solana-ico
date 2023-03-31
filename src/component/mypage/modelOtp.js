@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../config";
-import ModelDepositeAdress from "./ModelDepositeAdress";
+import { toast } from "react-toastify";
 
 const ModalOtp = ({ userInfo: userInfo }) => {
   const [email, setEmail] = useState("");
@@ -12,6 +12,8 @@ const ModalOtp = ({ userInfo: userInfo }) => {
       await API.post(`/api/auth/sendOtp`, {
         email: email,
         type: "changeWalletAddress",
+      }).then((response) => {
+        toast.success("OTP sent");
       });
       navigate("/updateWalletAddress");
     } catch (e) {
@@ -28,7 +30,7 @@ const ModalOtp = ({ userInfo: userInfo }) => {
         data-bs-target="#AdressUpdate"
         data-bs-whatever="@mdo"
       >
-        <i class="fa fa-edit "></i>
+        <i className="fa fa-edit "></i>
       </button>
       <div
         className="modal fade"

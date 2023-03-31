@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import API from "../../config";
 
-const RefrelCashReward = () => {
+const PurchaseHistory = () => {
   const { userData } = useSelector((state) => state.auth);
-  const [referralSummary, setReferralSummary] = useState([]);
+  const [purchaseHistory, setPurchasehistory] = useState([]);
+  const navigate = useNavigate();
   const handlePurchasehistory = async () => {
     try {
       let user = await API.post(
-        `/user/getReferralCashRewards/${userData.user.id}`
+        `/user/getUserPurchaseHistory/${userData.user.id}`
       );
-      setReferralSummary(user.data.referralCashRewards);
+      setPurchasehistory(user.data.userPurchaseHistory);
     } catch (e) {
       console.log("error while getting info");
     }
@@ -20,34 +22,35 @@ const RefrelCashReward = () => {
       handlePurchasehistory();
     }, 300);
   }, []);
+  const handleWithdraw = (index) => {
+    navigate("/otpforWithdraw");
+  };
   return (
     <>
-      <div className="row d-flex align-items-center g-lg-5 py-3">
-        <div className="col-lg-12 text-sm-start">
+      <div className="row d-flex text-center align-items-center  g-lg-5 py-3">
+        <div className="col-lg-12 text-sm-center">
           <div className="table-responsive-sm">
             <div style={{ overflowX: "auto" }}>
               <table className="table ScrollTable table-bordered border-secondary text-white">
                 <tbody className="text-start">
                   <tr className="text-warning text-center">
-                    <th colSpan={6} scope="col" className="display-6 ">
-                      Referral Cash Reward
+                    <th colSpan={5} scope="col" className="display-6 ">
+                      PURCHASE HISTORY
                     </th>
                   </tr>
                   <tr className="text-warning">
                     <th scope="col">DATE</th>
-                    <th scope="col">PURCHASER</th>
                     <th scope="col">DEPOSIT(WON)</th>
-                    <th scope="col">My REWARD</th>
+                    <th scope="col">COIN AMOUNT</th>
                     <th scope="col">STATUS</th>
                     <th scope="col">WITHDRAW</th>
                   </tr>
-                  {referralSummary.map((item, index) => {
+                  {purchaseHistory.map((item, index) => {
                     return (
                       <tr key={index}>
                         <td>Mar 20, 2023 14:00</td>
-                        <td>{item.referredTo.fullName}</td>
                         <td> {item.depositedWon}</td>
-                        <td> {item.myReward}</td>
+                        <td> {item.coinAmount}</td>
                         <td>
                           {item.status == 0
                             ? "Deposit Pending"
@@ -62,8 +65,11 @@ const RefrelCashReward = () => {
                         <td>
                           <button
                             className={`btn btn-sm btn-warning ${
-                              item.status == 2 ? "" : "disabled"
+                              item.status != 2 ? "" : "disabled"
                             } text-white`}
+                            onClick={() => {
+                              handleWithdraw();
+                            }}
                           >
                             WITHDRAW
                           </button>
@@ -81,4 +87,4 @@ const RefrelCashReward = () => {
   );
 };
 
-export default RefrelCashReward;
+export default PurchaseHistory;

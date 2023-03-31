@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import API from "../../config";
+import { login } from "../../Redux/auth/actions";
+import { toast } from "react-toastify";
 
 const ModelInfo = ({ userInfo: userInfo }) => {
-  console.log("userInfo", userInfo);
   const navigate = useNavigate();
+  const { userData } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -16,8 +20,10 @@ const ModelInfo = ({ userInfo: userInfo }) => {
         phoneNumber: phoneNumber,
         email: email,
       });
+      let userUpdate = await API.post(`/api/auth/getUserInfo/${userData._id}`);
+      dispatch(login(userUpdate.data.user));
+      toast.success("User info sucessfully updated");
       navigate("/mypage");
-      console.log("user", user);
     } catch (e) {
       console.log("error while getting info");
     }
@@ -36,7 +42,7 @@ const ModelInfo = ({ userInfo: userInfo }) => {
         data-bs-target="#exampleModal"
         data-bs-whatever="@mdo"
       >
-        <i class="fa fa-edit "></i>
+        <i className="fa fa-edit "></i>
       </button>
       <div
         className="modal fade"
@@ -53,47 +59,46 @@ const ModelInfo = ({ userInfo: userInfo }) => {
               </h1>
             </div>
             <div className="modal-body">
-              <form className="form-signup my-2">
-                <div className="form-label-group  my-4">
-                  <input
-                    type="text"
-                    name="id"
-                    className="form-control rounded-1 mb-4"
-                    placeholder="full name"
-                    required
-                    value={fullName}
-                    onChange={(e) => {
-                      setFullName(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-label-group  my-4">
-                  <input
-                    type="number"
-                    name="phone"
-                    className="form-control rounded-1 mb-4"
-                    placeholder="Phone"
-                    required
-                    value={phoneNumber}
-                    onChange={(e) => {
-                      setPhoneNumber(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-label-group  my-4">
-                  <input
-                    type="email"
-                    name="email"
-                    className="form-control rounded-1 mb-4"
-                    placeholder="Email"
-                    required
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                  />
-                </div>
-                {/* <div className="form-label-group  my-4">
+              <div className="form-label-group  my-4">
+                <input
+                  type="text"
+                  name="id"
+                  className="form-control rounded-1 mb-4"
+                  placeholder="full name"
+                  required
+                  value={fullName}
+                  onChange={(e) => {
+                    setFullName(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-label-group  my-4">
+                <input
+                  type="number"
+                  name="phone"
+                  className="form-control rounded-1 mb-4"
+                  placeholder="Phone"
+                  required
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    setPhoneNumber(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-label-group  my-4">
+                <input
+                  type="email"
+                  name="email"
+                  className="form-control rounded-1 mb-4"
+                  placeholder="Email"
+                  required
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+              </div>
+              {/* <div className="form-label-group  my-4">
                   <input
                     type="text"
                     name="code"
@@ -102,7 +107,6 @@ const ModelInfo = ({ userInfo: userInfo }) => {
                     required
                   />
                 </div> */}
-              </form>
             </div>
             <div className="modal-footer">
               <button

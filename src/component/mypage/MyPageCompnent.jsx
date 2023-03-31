@@ -4,17 +4,24 @@ import ModelInfo from "./ModelInfo";
 import PurchaseHistory from "./PurchaseHistory";
 import RefrelCashReward from "./RefrelCashReward";
 import API from "../../config";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../Redux/auth/actions";
+import { CopyToClipboard, onCopy } from "react-copy-to-clipboard";
+import { AiOutlineCopy } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const MyPageCompnent = () => {
+  const [copyTest, setcopyTest] = useState(false);
   const { userData } = useSelector((state) => state.auth);
   const [userInfo, setUserInfo] = useState([]);
   const [userReward, setUserReward] = useState([]);
   const [userBalance, setUserBalance] = useState([]);
-
+  const [refAddress, setRefAddress] = useState("");
+  const dispatch = useDispatch();
   const handleUserInfo = async () => {
     try {
       let user = await API.post(`/api/auth/getUserInfo/${userData.user.id}`);
+      dispatch(login(user.data.user));
       setUserInfo(user.data.user);
     } catch (e) {
       console.log("error while getting info");
@@ -63,6 +70,16 @@ const MyPageCompnent = () => {
       handleUserReward();
       handleUserBalance();
     }, 300);
+  }, []);
+  useEffect(() => {
+    handleUserInfo();
+  }, []);
+  const getRef = async () => {
+    let user = await API.post(`/api/auth/getUserInfo/${userData.user.id}`);
+    setRefAddress(`${window.location.href}/${user.data.user.code}`);
+  };
+  useEffect(() => {
+    getRef();
   }, []);
   return (
     <div>
@@ -170,13 +187,16 @@ const MyPageCompnent = () => {
                   </tr>
                   <tr>
                     <td colSpan={2}>
-                      Referral Link :
-                      Bs3g7s9KKQyJiVWy9guAVfiXQrVK6n7b5botezdMm8xr
-                      <span className="px-2">
-                        <a className="btn btn-sm text-white btn-outline-warning">
-                          <i class="fa fa-clone"></i>
-                        </a>
-                      </span>
+                      Referral Link :{refAddress}
+                      <CopyToClipboard
+                        onCopy={() => {
+                          setcopyTest(true);
+                          toast.info("copied");
+                        }}
+                        text={refAddress}
+                      >
+                        <AiOutlineCopy className="text-white fs-4" />
+                      </CopyToClipboard>
                     </td>
                   </tr>
                 </tbody>

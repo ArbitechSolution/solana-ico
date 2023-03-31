@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../Redux/auth/actions";
+import { toast } from "react-toastify";
 
 const NavBarComponent = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -11,6 +12,7 @@ const NavBarComponent = () => {
     localStorage.removeItem("token");
     dispatch(logout());
     navigate("/");
+    toast.info("Logout successfully");
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark navBG py-md-4 ">
@@ -32,7 +34,7 @@ const NavBarComponent = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              <Link className="nav-link" to="/home">
                 <span data-bs-target="#navbarSupportedContent">Home</span>
               </Link>
             </li>

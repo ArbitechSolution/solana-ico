@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../../config";
+import { toast } from "react-toastify";
 
 const JoinComponent = () => {
   const navigate = useNavigate();
@@ -13,15 +14,6 @@ const JoinComponent = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const handleRegister = async () => {
     try {
-      console.log(
-        "data",
-        fullName,
-        phoneNumber,
-        email,
-        password,
-        confirmPassword,
-        walletAddress
-      );
       let res = await API.post("/api/auth/register", {
         fullName: fullName,
         phoneNumber: phoneNumber,
@@ -29,7 +21,13 @@ const JoinComponent = () => {
         password: password,
         confirmPassword: confirmPassword,
         walletAddress: walletAddress,
-      });
+      })
+        .then((res) => {
+          toast.success("User registered successfully");
+        })
+        .catch((err) => {
+          toast.error("Registration failed");
+        });
       console.log("res", res);
       navigate("/login");
     } catch (e) {
