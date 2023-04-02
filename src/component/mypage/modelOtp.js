@@ -13,10 +13,11 @@ const ModalOtp = ({ userInfo: userInfo }) => {
         email: email,
         type: "changeWalletAddress",
       }).then((response) => {
-        toast.success("OTP sent");
+        toast.success(response.data.showableMessage);
       });
       navigate("/updateWalletAddress");
     } catch (e) {
+      toast.error(e.response.data.showableMessage)
       console.log("error while getting info");
     }
   };
@@ -43,7 +44,7 @@ const ModalOtp = ({ userInfo: userInfo }) => {
           <div className="modal-content" style={{ backgroundColor: "#192039" }}>
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="UpdateAdressLabel">
-                Request Otp
+              이메일 인증 요청
               </h1>
             </div>
             <div className="modal-body">
@@ -53,7 +54,7 @@ const ModalOtp = ({ userInfo: userInfo }) => {
                     type="email"
                     name="email"
                     className="form-control rounded-1 mb-4"
-                    placeholder="Enter email"
+                    placeholder="이메일 입력"
                     required
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
@@ -67,7 +68,7 @@ const ModalOtp = ({ userInfo: userInfo }) => {
                 className="btn btn-outline-danger text-center rounded-1 form-control text-white my-md-4"
                 data-bs-dismiss="modal"
               >
-                Close
+                취소
               </button>
               <button
                 type="button"
@@ -77,7 +78,7 @@ const ModalOtp = ({ userInfo: userInfo }) => {
                 }}
                 className="btn btn-success text-center rounded-1 form-control text-white my-md-4"
               >
-                Send Otp <i className="fa fa-paper-plane px-1"></i>
+                제출 <i className="fa fa-paper-plane px-1"></i>
               </button>
             </div>
           </div>

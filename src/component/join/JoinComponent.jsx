@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../../config";
 import { toast } from "react-toastify";
-
+import { resolveAfterGiven } from '../../constant'
 const JoinComponent = () => {
   const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
@@ -14,7 +14,7 @@ const JoinComponent = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const handleRegister = async () => {
     try {
-      let res = await API.post("/api/auth/register", {
+      await API.post("/api/auth/register", {
         fullName: fullName,
         phoneNumber: phoneNumber,
         email: email,
@@ -22,15 +22,17 @@ const JoinComponent = () => {
         confirmPassword: confirmPassword,
         walletAddress: walletAddress,
       })
-        .then((res) => {
-          toast.success("User registered successfully");
+        .then(async (res) => {
+          localStorage.setItem("token", res.data.data.token);
+          toast.success(res.data.showableMessage);
+          await resolveAfterGiven(1500)
+          window.location.href = "/";
         })
         .catch((err) => {
           toast.error("Registration failed");
         });
-      console.log("res", res);
-      navigate("/login");
     } catch (e) {
+      toast.error(e.response.data.showableMessage)
       console.log("error while register");
     }
   };
@@ -45,14 +47,14 @@ const JoinComponent = () => {
                 <div className=" text-light card-signin my-5">
                   <div className="card-body bgLogin p-4 ">
                     <h5 className="card-title display-4 text-white text-center p-md-4">
-                      Join Us
+                      회원가입
                     </h5>
                     <div className="form-label-group  my-4">
                       <input
                         type="text"
                         name="name"
                         className="form-control rounded-1 mb-4"
-                        placeholder="Enter name"
+                        placeholder="이름"
                         required
                         value={fullName}
                         onChange={(e) => {
@@ -65,7 +67,7 @@ const JoinComponent = () => {
                         type="number"
                         name="phone"
                         className="form-control rounded-1 mb-4"
-                        placeholder="Enter phone"
+                        placeholder="연락처"
                         required
                         value={phoneNumber}
                         onChange={(e) => {
@@ -78,7 +80,7 @@ const JoinComponent = () => {
                         type="password"
                         name="password"
                         className="form-control rounded-1 mb-4"
-                        placeholder="Enter password"
+                        placeholder="비밀번호"
                         required
                         value={password}
                         onChange={(e) => {
@@ -91,7 +93,7 @@ const JoinComponent = () => {
                         type="password"
                         name="confirmPassword"
                         className="form-control rounded-1 mb-4"
-                        placeholder="Confirm password"
+                        placeholder="비밀번호 확인"
                         required
                         value={confirmPassword}
                         onChange={(e) => {
@@ -104,7 +106,7 @@ const JoinComponent = () => {
                         type="email"
                         name="email"
                         className="form-control rounded-1 mb-4"
-                        placeholder="Enter email"
+                        placeholder="이메일"
                         required
                         value={email}
                         onChange={(e) => {
@@ -118,7 +120,7 @@ const JoinComponent = () => {
                         type="text"
                         name="wallet"
                         className="form-control rounded-1"
-                        placeholder="deposit wallet"
+                        placeholder="입금주소(솔라나 지갑)"
                         required
                         value={walletAddress}
                         onChange={(e) => {
@@ -126,7 +128,23 @@ const JoinComponent = () => {
                         }}
                       />
                     </div>
-
+                    <div
+                      className="alert alert-info alert-dismissible fade show text-start "
+                      role="alert"
+                    >
+                      <span>
+                        <strong>[안내사항]</strong>
+                        <p>입금 받을 주소가 솔라나 체인 지갑주소를 확인해 주시기 바랍니다</p>
+                        <p>잘못 입력된 지갑 주소에 대한 전송은 책임지지 않으니 꼭 확인 부탁 드립니다</p>
+                        <p>입금 주소를 변경하려면 마이페이지에서 변경 가능합니다</p>
+                      </span>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div>
                     <div className="text-center d-flex">
                       <button
                         className="btn btn-success text-center rounded-1 form-control me-2 text-white my-md-4"
@@ -134,21 +152,21 @@ const JoinComponent = () => {
                           handleRegister();
                         }}
                       >
-                        Register <i className="fa fa-paper-plane px-1"></i>
+                        가입 <i className="fa fa-paper-plane px-1"></i>
                       </button>
                       <Link
                         to="/"
                         className="btn btn-outline-danger text-center rounded-1 form-control text-white my-md-4"
                       >
-                        Cancel <i className="fa fa-trash-o px-1"></i>
+                        취소 <i className="fa fa-trash-o px-1"></i>
                       </Link>
                     </div>
 
                     <small className="text-white ">
-                      Already have an account?{" "}
+                      계정이 없으신가요??{" "}
                     </small>
                     <Link to="/login" type="submit" className="text-warning">
-                      Login
+                      로그인
                     </Link>
                   </div>
                 </div>

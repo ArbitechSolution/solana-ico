@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import API from "../../config";
-
+import {toast} from "react-toastify"
 const ModalOtp = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const {type, id} = useParams();
   const handleSendOtp = async () => {
     try {
-      await API.post(`/api/auth/sendOtp`, {
+      let res =await API.post(`/api/auth/sendOtp`, {
         email: email,
-        type: "withdrawPurchasedToken",
+        type: type,
       });
-      navigate("/purchase");
+      toast.success(res.data.showableMessage);
+      navigate(`/confirmWithdrawOtp/${type}/${id}`);
     } catch (e) {
+      toast.error(e.response.data.showableMessage)
       console.log("error while getting info");
     }
   };
@@ -27,14 +30,14 @@ const ModalOtp = () => {
                 <div className=" text-light card-signin my-5">
                   <div className="card-body bgLogin p-4 ">
                     <h5 className="card-title display-4 text-white text-center p-md-4">
-                      Request Otp
+                    이메일 인증
                     </h5>
                     <div className="form-label-group  my-4">
                       <input
                         type="email"
                         name="email"
                         className="form-control rounded-1 mb-4"
-                        placeholder="Enter email"
+                        placeholder="이메일 입력"
                         required
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
@@ -47,10 +50,10 @@ const ModalOtp = () => {
                         onClick={() => {
                           handleSendOtp();
                         }}
-                        to="/confirmpassword"
+                        
                         className="btn btn-success text-center rounded-1 form-control text-white my-md-4"
                       >
-                        Send Otp <i className="fa fa-paper-plane px-1"></i>
+                        제출 <i className="fa fa-paper-plane px-1"></i>
                       </Link>
                     </div>
                   </div>

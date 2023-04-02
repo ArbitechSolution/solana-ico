@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../Redux/auth/actions";
 import API from "../../config";
 import { toast } from "react-toastify";
-
+import {resolveAfterGiven} from "../../constant"
 const LoginComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,10 +19,13 @@ const LoginComponent = () => {
       });
       localStorage.setItem("token", userData.data.data.token);
       dispatch(login(userData.data.data));
-      navigate("/mypage");
-      toast.success("Login successfully");
+      toast.success(userData.data.showableMessage);
+      await resolveAfterGiven(1500)
+      window.location.href = "/";
+
     } catch (e) {
-      console.log("error while login");
+      toast.error(e.response.data.showableMessage)
+      console.log("error while login", e.response.data.showableMessage);
     }
   };
   return (
@@ -35,7 +38,7 @@ const LoginComponent = () => {
                 <div className=" text-light card-signin my-5">
                   <div className="card-body bgLogin p-4 ">
                     <h5 className="card-title display-4 text-white text-center p-md-4">
-                      Sign In
+                    로그인
                     </h5>
                     <form className="form-signin my-2">
                       <div className="form-label-group  my-4">
@@ -43,7 +46,7 @@ const LoginComponent = () => {
                           type="email"
                           name="email"
                           className="form-control rounded-1 mb-4"
-                          placeholder="Enter email"
+                          placeholder="이메일 입력"
                           required
                           onChange={(e) => setEmail(e.target.value)}
                           value={email}
@@ -54,7 +57,7 @@ const LoginComponent = () => {
                           type="password"
                           name="password"
                           className="form-control rounded-1 "
-                          placeholder="Password"
+                          placeholder="비밀번호"
                           required
                           onChange={(e) => setPassword(e.target.value)}
                           value={password}
@@ -66,7 +69,7 @@ const LoginComponent = () => {
                           className="text-white  text-left text-dark"
                           to="/reset"
                         >
-                          Forgot password?
+                          비밀번호 분실?
                         </Link>
                       </p>
                       <div className="text-center">
@@ -75,16 +78,16 @@ const LoginComponent = () => {
                           onClick={() => handleLogin()}
                           className="btn btn-success text-center rounded-1 form-control text-white my-md-4"
                         >
-                          Sign In <i className="fa fa-paper-plane px-1"></i>
+                          로그인 <i className="fa fa-paper-plane px-1"></i>
                         </button>
                       </div>
                     </form>
 
                     <small className="text-white ">
-                      Don't have an account?{" "}
+                    계정이 없으신가요??{" "}
                     </small>
                     <Link to="/join" type="button" className="text-warning">
-                      Register
+                    회원가입
                     </Link>
                   </div>
                 </div>

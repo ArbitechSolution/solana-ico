@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import API from "../../config";
-
+import { toast } from "react-toastify";
 const ModelDepositeAdress = () => {
   const { userData } = useSelector((state) => state.auth);
   const [userInfo, setUserInfo] = useState([]);
@@ -16,8 +16,10 @@ const ModelDepositeAdress = () => {
         walletAddress: walletAddressTochange,
         resetCode: resCode,
       });
+      toast.success(user.data.showableMessage);
       navigate("/mypage");
     } catch (e) {
+      toast.error(e.response.data.showableMessage);
       console.log("error while getting info");
     }
   };

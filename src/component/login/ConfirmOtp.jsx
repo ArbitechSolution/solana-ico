@@ -27,13 +27,14 @@ const ConfirmOtp = () => {
       })
         .then((response) => {
           navigate("/login");
-          toast.info("Password reset Sucessfully");
+          toast.success(response.data.showableMessage);
         })
         .catch((error) => {
           console.log(error, "error");
-          toast.error("Password reset failed");
+          toast.error(error.response.data.showableMessage)
         });
     } catch (e) {
+      toast.error(e.response.data.showableMessage)
       console.log("error while getting info");
     }
   };
@@ -47,14 +48,14 @@ const ConfirmOtp = () => {
                 <div className=" text-light card-signin my-5">
                   <div className="card-body bgLogin p-4 ">
                     <h5 className="card-title display-4 text-white text-center p-md-4">
-                      Reset
+                    비밀번호 초기화
                     </h5>
                     <div className="form-label-group  my-4">
                       <input
                         type="text"
                         name="ref-code"
                         className="form-control rounded-1 mb-4"
-                        placeholder="OTP"
+                        placeholder="이메일 인증"
                         required
                         value={otp}
                         onChange={(e) => {
@@ -67,7 +68,7 @@ const ConfirmOtp = () => {
                         type="password"
                         name="password"
                         className="form-control rounded-1 mb-4"
-                        placeholder="Enter new password"
+                        placeholder="신규 비밀번호"
                         required
                         value={password}
                         onChange={(e) => {
@@ -80,7 +81,7 @@ const ConfirmOtp = () => {
                         type="password"
                         name="confirm_password"
                         className="form-control rounded-1 mb-4"
-                        placeholder="Confirm new password"
+                        placeholder="신규 비밀번호 확인"
                         required
                         value={confirmPassword}
                         onChange={(e) => {
@@ -97,16 +98,16 @@ const ConfirmOtp = () => {
                         }}
                         className="btn btn-success text-center rounded-1 form-control text-white my-md-4"
                       >
-                        Reset
+                        제출
                         <i className="fa fa-gears px-1"></i>
                       </button>
                     </div>
 
                     <small className="text-white ">
-                      Don't received an otp?{" "}
+                    인증이 도착안함 ? 
                     </small>
                     <Link to="/reset" type="button" className="text-warning">
-                      Resend
+                    재전송
                     </Link>
                   </div>
                 </div>
