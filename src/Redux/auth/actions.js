@@ -1,13 +1,16 @@
 import { ActionTypes } from "../types";
 
-export const login = () => {
+export const login = (data) => {
   return async (dispatch) => {
     let isAuthenticated = false;
-    if (sessionStorage.token) {
+    if (localStorage.token) {
       isAuthenticated = true;
     }
 
-    await dispatch({ type: ActionTypes.LOGIN, payload: isAuthenticated });
+    await dispatch({
+      type: ActionTypes.LOGIN,
+      payload: { isAuthenticated, data },
+    });
   };
 };
 export const logout = () => {

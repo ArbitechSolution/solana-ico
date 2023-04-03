@@ -1,10 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DepositeWalletAdress from "./DepositeWalletAdress";
 import ModelInfo from "./ModelInfo";
 import PurchaseHistory from "./PurchaseHistory";
 import RefrelCashReward from "./RefrelCashReward";
+import API from "../../config";
+import { useSelector } from "react-redux";
 
 const MyPageCompnent = () => {
+  const { userData } = useSelector((state) => state.auth);
+  const [userInfo, setUserInfo] = useState([]);
+  const [userReward, setUserReward] = useState([]);
+  const [userBalance, setUserBalance] = useState([]);
+  const handleUserInfo = async () => {
+    try {
+      let user = await API.post(`/api/auth/getUserInfo/${userData.user.id}`);
+      setUserInfo(user.data.user);
+    } catch (e) {
+      console.log("error while getting info");
+    }
+  };
+  const handleUserReward = async () => {
+    try {
+      let user = await API.post(
+        `/user/getReferralRewardSummary/${userData.user.id}`
+      );
+      setUserReward(user.data.rewardSummary);
+    } catch (e) {
+      console.log("error while getting info");
+    }
+  };
+  const handleUserBalance = async () => {
+    try {
+      let user = await API.post(
+        `/user/getReferralRewardSummary/${userData.user.id}`
+      );
+      setUserReward(user.data.rewardSummary);
+    } catch (e) {
+      console.log("error while getting info");
+    }
+  };
+  useEffect(() => {
+    setTimeout(() => {
+      handleUserInfo();
+      handleUserReward();
+    }, 300);
+  }, []);
   return (
     <div>
       <div>
@@ -57,7 +97,7 @@ const MyPageCompnent = () => {
                 <tbody className="text-start">
                   <tr>
                     <td>referral cash reward</td>
-                    <td> 10% 보상</td>
+                    <td> {userReward.totalRewardReceived}</td>
                   </tr>
                   <tr>
                     <td>token quantity</td>
@@ -91,18 +131,23 @@ const MyPageCompnent = () => {
                     </th>
                   </tr>
                 </thead>
+
                 <tbody className="text-start">
                   <tr>
                     <td>ID</td>
-                    <td>HONG</td>
+
+                    <td>{userInfo._id}</td>
+                    <td rowSpan={4} className="text-center ">
+                      <ModelInfo />
+                    </td>
                   </tr>
                   <tr>
                     <td>PHONE</td>
-                    <td> 010-1234-5678</td>
+                    <td> {userInfo.phoneNumber}</td>
                   </tr>
                   <tr>
                     <td>EMAIL</td>
-                    <td>steve@naver.com</td>
+                    <td>{userInfo.email}</td>
                   </tr>
                   <tr>
                     <td>otp</td>
@@ -124,7 +169,7 @@ const MyPageCompnent = () => {
             </div>
           </div>
 
-          <DepositeWalletAdress />
+          <DepositeWalletAdress userInfo={userInfo} />
 
           <PurchaseHistory />
           <RefrelCashReward />
