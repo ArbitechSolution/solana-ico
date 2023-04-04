@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../src/page/navBar";
 import Login from "./page/Login";
 import Join from "./page/Join";
@@ -13,12 +13,25 @@ import Reset from "./page/Reset";
 import ConfirmOtp from "./component/login/ConfirmOtp";
 import ModelDepositeAdress from "./component/mypage/ModelDepositeAdress";
 import ModalOtp from "./component/mypage/otpForWithdraw";
-import PurchaseHistory from "./component/mypage/purchase";
+import ConfirmWithdrawOtp from "./component/mypage/ConfirmWithdrawOTP";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import {authVerify} from "./routes/authVerify";
+import { useDispatch } from "react-redux";
+// import { logout } from "./Redux/auth/actions";
 function App() {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  // const { isAuthenticated } = useSelector((state) => state.auth);
+  let isAuthenticated = false;
+  if(localStorage.token){
+  isAuthenticated = true;
+  }
+  const dispatch  = useDispatch()
+  // const logOut = () => {
+  //   dispatch(logout());
+  // };
+useEffect(()=>{
+
+},[])
   return (
     <div className="App">
       <BrowserRouter>
@@ -30,19 +43,19 @@ function App() {
           <Route path="/join" element={<Join />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/confirmpassword" element={<ConfirmOtp />} />
-          <Route path="/" element={<Login />} />
-
+          {/* <Route path="/" element={<Login />} /> */}
           <Route
             element={<ProtectedRouting isAuthenticated={isAuthenticated} />}
           >
+          <Route path="/:ref?" element={<Home />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route
               path="/updateWalletAddress"
               element={<ModelDepositeAdress />}
             />
-            <Route path="/home" element={<Home />} />
-            <Route path="/otpforWithdraw" element={<ModalOtp />} />
-            <Route path="/purchase" element={<PurchaseHistory />} />
+            {/* <Route path="/home/:ref?" element={<Home />} /> */}
+            <Route path="/otpforWithdraw/:type/:id" element={<ModalOtp />} />
+            <Route path="/confirmWithdrawOtp/:type/:id" element={<ConfirmWithdrawOtp />} />
           </Route>
         </Routes>
       </BrowserRouter>

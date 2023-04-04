@@ -9,10 +9,12 @@ import { login } from "../../Redux/auth/actions";
 import { CopyToClipboard, onCopy } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
 import { toast } from "react-toastify";
-
+import jwt from 'jsonwebtoken';
+import { formatNumber } from "../../constant"
 const MyPageCompnent = () => {
   const [copyTest, setcopyTest] = useState(false);
   const { userData } = useSelector((state) => state.auth);
+  // console.log("userData", userData);
   const [userInfo, setUserInfo] = useState([]);
   const [userReward, setUserReward] = useState([]);
   const [userBalance, setUserBalance] = useState([]);
@@ -20,7 +22,8 @@ const MyPageCompnent = () => {
   const dispatch = useDispatch();
   const handleUserInfo = async () => {
     try {
-      let user = await API.post(`/api/auth/getUserInfo/${userData.user.id}`);
+      let tokendata = jwt.decode(localStorage.token);
+      let user = await API.post(`/api/auth/getUserInfo/${tokendata.userId}`);
       dispatch(login(user.data.user));
       setUserInfo(user.data.user);
     } catch (e) {
@@ -29,8 +32,9 @@ const MyPageCompnent = () => {
   };
   const handleUserReward = async () => {
     try {
+      let tokendata = jwt.decode(localStorage.token);
       let user = await API.post(
-        `/user/getReferralRewardSummary/${userData.user.id}`
+        `/user/getReferralRewardSummary/${tokendata.userId}`
       ).then((response) => {
         if (response.status == 200) {
           setUserReward(response.data.rewardSummary);
@@ -44,8 +48,9 @@ const MyPageCompnent = () => {
   };
   const handleUserBalance = async () => {
     try {
+      let tokendata = jwt.decode(localStorage.token);
       let user = await API.post(
-        `/user/getTokenPurchaseSummary/${userData.user.id}`
+        `/user/getTokenPurchaseSummary/${tokendata.userId}`
       )
         .then((response) => {
           if (response.status == 200) {
@@ -66,20 +71,30 @@ const MyPageCompnent = () => {
   };
   useEffect(() => {
     setTimeout(() => {
-      handleUserInfo();
-      handleUserReward();
-      handleUserBalance();
+      let tokendata = jwt.decode(localStorage.token);
+      if (tokendata) {
+        handleUserInfo();
+        handleUserReward();
+        handleUserBalance();
+      }
     }, 300);
   }, []);
   useEffect(() => {
-    handleUserInfo();
+    let tokendata = jwt.decode(localStorage.token);
+    if (tokendata) {
+      handleUserInfo();
+    }
   }, []);
   const getRef = async () => {
-    let user = await API.post(`/api/auth/getUserInfo/${userData.user.id}`);
-    setRefAddress(`${window.location.href}/${user.data.user.code}`);
+    let tokendata = jwt.decode(localStorage.token);
+    let user = await API.post(`/api/auth/getUserInfo/${tokendata.userId}`);
+    setRefAddress(`${user.data.user.refCode}`);
   };
   useEffect(() => {
-    getRef();
+    let tokendata = jwt.decode(localStorage.token);
+    if (tokendata) {
+      getRef();
+    }
   }, []);
   return (
     <div>
@@ -94,26 +109,26 @@ const MyPageCompnent = () => {
                 <thead className="text-warning">
                   <tr>
                     <th scope="col" colSpan="2" className="display-6 ">
-                      MY BALANCE
+                      나의 잔고
                     </th>
                   </tr>
                 </thead>
                 <tbody className="text-start">
                   <tr>
-                    <td>Total Purchased Token</td>
-                    <td> {userBalance.totalPurchasedToken || 0}</td>
+                    <td>전체 보상</td>
+                    <td> {userBalance.totalPurchasedToken ? formatNumber(userBalance.totalPurchasedToken) : 0}</td>
                   </tr>
                   <tr>
-                    <td>Total UnLockup Tokens</td>
-                    <td> {userBalance.totalUnLockupTokens || 0}</td>
+                    <td>락업 토큰 </td>
+                    <td> {userBalance.totalLockupTokens ? formatNumber(userBalance.totalLockupTokens) : 0}</td>
                   </tr>
                   <tr>
-                    <td>Available To Withdraw</td>
-                    <td> {userBalance.availableToWithdraw || 0}</td>
+                    <td>락업 해제 토큰</td>
+                    <td> {userBalance.totalUnLockupQuantity ? formatNumber(userBalance.totalUnLockupQuantity) : 0}</td>
                   </tr>
                   <tr>
-                    <td>Total Deposit Pending</td>
-                    <td> {userBalance.totalDepositPending || 0} </td>
+                    <td>입금 대기 토큰</td>
+                    <td> {userBalance.totalDepositPending ? formatNumber(userBalance.totalDepositPending) : 0} </td>
                   </tr>
                 </tbody>
               </table>
@@ -126,26 +141,26 @@ const MyPageCompnent = () => {
                 <thead className="text-warning">
                   <tr>
                     <th scope="col" colSpan="2" className="display-6 ">
-                      MY REWARD
+                      나의 캐시 보상
                     </th>
                   </tr>
                 </thead>
                 <tbody className="text-start">
                   <tr>
-                    <td>Total Pending Reward</td>
-                    <td> {userReward.totalPendingReward}</td>
+                    <td>전체 보상(원)</td>
+                    <td> {userReward.totalRewardReceived ? formatNumber(userReward.totalRewardReceived) : 0}</td>
                   </tr>
                   <tr>
-                    <td>Total UnLockup Quantity</td>
-                    <td> {userReward.totalUnLockupQuantity}</td>
+                    <td>락업 금액(원) </td>
+                    <td> {userReward.totalLockupQuantity ? formatNumber(userReward.totalLockupQuantity) : 0}</td>
                   </tr>
                   <tr>
-                    <td>Available Reward</td>
-                    <td> {userReward.availableReward}</td>
+                    <td>락업 해제 금액(원) </td>
+                    <td> {userReward.totalUnLockupQuantity ? formatNumber(userReward.totalUnLockupQuantity): 0}</td>
                   </tr>
                   <tr>
-                    <td>Total Reward Received</td>
-                    <td> {userReward.totalRewardReceived}</td>
+                    <td>대기 보상 금액(원)</td>
+                    <td> {userReward.totalPendingReward? formatNumber(userReward.totalPendingReward): 0}</td>
                   </tr>
                 </tbody>
               </table>
@@ -160,7 +175,7 @@ const MyPageCompnent = () => {
                 <thead className="text-warning ">
                   <tr>
                     <th colSpan={1} scope="col" className="display-6">
-                      MY BASIC INFORMATION
+                      나의 기본 정보
                     </th>
                     <th className="text-center ">
                       <ModelInfo userInfo={userInfo} />
@@ -170,24 +185,29 @@ const MyPageCompnent = () => {
 
                 <tbody className="text-start">
                   <tr>
-                    <td>ID</td>
-                    <td>{userInfo._id}</td>
+                    <td>아이디</td>
+                    <td>{userInfo.fullName}</td>
                   </tr>
                   <tr>
-                    <td>PHONE</td>
+                    <td>연락처</td>
                     <td> {userInfo.phoneNumber}</td>
                   </tr>
                   <tr>
-                    <td>EMAIL</td>
+                    <td>이메일</td>
                     <td>{userInfo.email}</td>
                   </tr>
-                  <tr>
-                    <td>otp</td>
+                  {/* <tr>
+                    <td>OTP</td>
                     <td>off</td>
-                  </tr>
+                  </tr> */}
                   <tr>
-                    <td colSpan={2}>
-                      Referral Link :{refAddress}
+                    <td>
+                      초대링크 :
+                    </td>
+                    <td>
+
+
+                      {refAddress}
                       <CopyToClipboard
                         onCopy={() => {
                           setcopyTest(true);
@@ -197,7 +217,9 @@ const MyPageCompnent = () => {
                       >
                         <AiOutlineCopy className="text-white fs-4" />
                       </CopyToClipboard>
+
                     </td>
+
                   </tr>
                 </tbody>
               </table>

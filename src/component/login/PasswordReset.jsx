@@ -9,13 +9,14 @@ const PasswordRest = () => {
   const navigate = useNavigate();
   const handleSendOtp = async () => {
     try {
-      await API.post(`/api/auth/sendOtp`, {
+      let response = await API.post(`/api/auth/sendOtp`, {
         email: email,
         type: "reset",
       });
       localStorage.setItem("email", email);
-      toast.success("OTP sent");
+      toast.success(response.data.showableMessage);
     } catch (e) {
+      toast.error(e.response.data.showableMessage)
       console.log("error while getting info");
     }
   };
@@ -29,14 +30,14 @@ const PasswordRest = () => {
                 <div className=" text-light card-signin my-5">
                   <div className="card-body bgLogin p-4 ">
                     <h5 className="card-title display-4 text-white text-center p-md-4">
-                      Request Otp
+                    이메일 인증
                     </h5>
                     <div className="form-label-group  my-4">
                       <input
                         type="email"
                         name="email"
                         className="form-control rounded-1 mb-4"
-                        placeholder="Enter email"
+                        placeholder="이메일 입력"
                         required
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
@@ -52,7 +53,7 @@ const PasswordRest = () => {
                         to="/confirmpassword"
                         className="btn btn-success text-center rounded-1 form-control text-white my-md-4"
                       >
-                        Send Otp <i className="fa fa-paper-plane px-1"></i>
+                        제출 <i className="fa fa-paper-plane px-1"></i>
                       </Link>
                     </div>
                   </div>

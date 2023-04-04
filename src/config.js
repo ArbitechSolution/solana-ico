@@ -1,5 +1,7 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3000";
+// const baseUrl = "https://server.privatesale.live/";
+const baseUrl = "http://localhost:3050/";
+
 const token = localStorage.getItem("token");
 const instance = axios.create({
   baseURL: baseUrl,

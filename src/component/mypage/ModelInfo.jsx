@@ -22,9 +22,10 @@ const ModelInfo = ({ userInfo: userInfo }) => {
       });
       let userUpdate = await API.post(`/api/auth/getUserInfo/${userData._id}`);
       dispatch(login(userUpdate.data.user));
-      toast.success("User info sucessfully updated");
+      toast.success(user.data.showableMessage);
       navigate("/mypage");
     } catch (e) {
+      toast.error(e.response.data.showableMessage)
       console.log("error while getting info");
     }
   };
@@ -55,7 +56,7 @@ const ModelInfo = ({ userInfo: userInfo }) => {
           <div className="modal-content" style={{ backgroundColor: "#192039" }}>
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Update Info
+              정보 변경
               </h1>
             </div>
             <div className="modal-body">
@@ -114,7 +115,7 @@ const ModelInfo = ({ userInfo: userInfo }) => {
                 className="btn btn-outline-danger"
                 data-bs-dismiss="modal"
               >
-                Close
+                취소
               </button>
               <button
                 type="button"
@@ -124,7 +125,7 @@ const ModelInfo = ({ userInfo: userInfo }) => {
                   handleUserUpdate();
                 }}
               >
-                Update
+                업데이트
               </button>
             </div>
           </div>

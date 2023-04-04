@@ -6,7 +6,6 @@ export const login = (data) => {
     if (localStorage.token) {
       isAuthenticated = true;
     }
-
     await dispatch({
       type: ActionTypes.LOGIN,
       payload: { isAuthenticated, data },
