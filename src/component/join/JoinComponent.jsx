@@ -29,7 +29,7 @@ const JoinComponent = () => {
           window.location.href = "/";
         })
         .catch((err) => {
-          toast.error("Registration failed");
+          toast.error(err.response.data.showableMessage)
         });
     } catch (e) {
       toast.error(e.response.data.showableMessage)
@@ -54,7 +54,7 @@ const JoinComponent = () => {
                         type="text"
                         name="name"
                         className="form-control rounded-1 mb-4"
-                        placeholder="이름"
+                        placeholder="ID"
                         required
                         value={fullName}
                         onChange={(e) => {
@@ -120,7 +120,7 @@ const JoinComponent = () => {
                         type="text"
                         name="wallet"
                         className="form-control rounded-1"
-                        placeholder="입금주소(솔라나 지갑)"
+                        placeholder="입금주소"
                         required
                         value={walletAddress}
                         onChange={(e) => {

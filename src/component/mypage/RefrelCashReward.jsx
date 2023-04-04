@@ -59,28 +59,32 @@ const RefrelCashReward = () => {
                         <td> {formatNumber(item.depositedWon)}</td>
                         <td> {formatNumber(item.myReward)}</td>
                         <td>
-                          {item.status == 0
-                            ? "입금대기"
-                            : item == 1
-                              ? "락업기간"
-                              : item == 2
-                                ? "출금가능"
-                                : item == 3
-                                  ? "출금대기"
-                                  : "출금완료"
-                          }
+                        {item.status == 0
+                              ? "입금대기"
+                              : item.status == 1
+                                ? "락업기간"
+                                : item.status == 2
+                                  ? "출금가능"
+                                  : item.status == 3
+                                    ? "출금대기"
+                                    : "출금완료"
+                            }
                         </td>
                         <td>
+                        {
+                            item.status != 4 ? 
                           <button
-                            className={`btn btn-sm btn-warning 
-                            ${item.status == 2 ? "" : "disabled"}
-                               text-white`}
+                          disabled={item.status != 2 ? true : false}
+                            className={`btn btn-sm btn-warning text-white`}
                             onClick={() => {
                               handleWithdraw(item._id);
                             }}
                           >
-                            출금하기
+                             출금하기
                           </button>
+                          :
+                          "출금완료"
+                          }
                         </td>
                       </tr>
                     );

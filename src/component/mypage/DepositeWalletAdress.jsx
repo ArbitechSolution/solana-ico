@@ -13,7 +13,7 @@ const DepositeWalletAdress = ({ userInfo: userInfo }) => {
                 <tbody>
                   <tr className="text-warning">
                     <th colSpan={2} scope="col" className="display-6 ">
-                    입금 지갑(솔라나 지갑)
+                    입금 지갑
                     </th>
                   </tr>
                   <tr className=" text-start">

@@ -7,25 +7,19 @@ import { useParams } from "react-router-dom";
 import jwt from 'jsonwebtoken';
 import { toast } from "react-toastify";
 import { resolveAfterGiven } from "../../constant"
+import {formatNumber} from '../../constant'
 const HomeComponent = () => {
   const { userData } = useSelector((state) => state.auth);
   const [amount, setAmount] = useState();
   const [refCode, setrefCode] = useState();
   const [cal, setCal] = useState();
-  const { ref } = useParams();
-  const getRef = async () => {
-    let user = await API.post(`/api/auth/getUserInfo/${userData._id}`);
-    setrefCode(user.data.user.code);
-  };
-  useEffect(() => {
-    if (ref != undefined) {
-      setrefCode(ref);
-    }
-  }, [ref]);
+
+
   const handlePurchase = async () => {
     try {
       if (localStorage.token) {
-        if (amount != null && amount != undefined && amount != "") {
+        if (amount != null && amount != undefined && amount != ""
+        ) {
           let tokendata = jwt.decode(localStorage.token);
           let { data: { user } } = await API.post(`/api/auth/getUserInfo/${tokendata.userId}`);
           if (refCode != user.refCode) {
@@ -42,7 +36,7 @@ const HomeComponent = () => {
             toast.error("본인 초대 코드를 입력은 보상에서 제외됩니다")
           }
         } else {
-          toast.info("금액을 먼저 입력해주세요.")
+          toast.info("모든 영역이 필요합니다.")
         }
       } else {
         toast.info("먼저 로그인을 해주세요.")
@@ -58,7 +52,7 @@ const HomeComponent = () => {
     setAmount(value);
     await API.post(`/user/getPrice`).then((response) => {
       let res = parseFloat(value / response.data.price);
-      setCal(res);
+      setCal(formatNumber(res));
     });
   };
   return (

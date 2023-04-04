@@ -1,28 +1,17 @@
-// import React from "react";
-// import { withRouter } from "react-router";
 
-// const parseJwt = (token) => {
-//     try {
-//       return JSON.parse(atob(token.split(".")[1]));
-//     } catch (e) {
-//       return null;
-//     }
-//   };
+import jwt from "jsonwebtoken";
 
-// const AuthVerify = (props) => {
-//     props.history.listen(() => {
-//       const token = JSON.parse(localStorage.getItem("token"));
-  
-//       if (token) {
-//         const decodedJwt = parseJwt(token);
-  
-//         if (decodedJwt.exp * 1000 < Date.now()) {
-//           props.logOut();
-//         }
-//       }
-//     });
-  
-//     return <div></div>;
-//   };
-  
-//   export default withRouter(AuthVerify);
+export const authVerify = () => {
+    if(localStorage.token){
+        let {exp} = jwt.decode(localStorage.token);
+        console.log("expire", exp );
+        if (exp * 1000 < Date.now()) {
+         
+            return false
+        }else{
+           return true
+        }
+    }else{
+        window.location.href = "/login";
+    }
+}

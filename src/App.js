@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../src/page/navBar";
 import Login from "./page/Login";
 import Join from "./page/Join";
@@ -16,7 +16,7 @@ import ModalOtp from "./component/mypage/otpForWithdraw";
 import ConfirmWithdrawOtp from "./component/mypage/ConfirmWithdrawOTP";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import authVerify from "./routes/authVerify";
+import {authVerify} from "./routes/authVerify";
 import { useDispatch } from "react-redux";
 // import { logout } from "./Redux/auth/actions";
 function App() {
@@ -29,7 +29,9 @@ function App() {
   // const logOut = () => {
   //   dispatch(logout());
   // };
+useEffect(()=>{
 
+},[])
   return (
     <div className="App">
       <BrowserRouter>
