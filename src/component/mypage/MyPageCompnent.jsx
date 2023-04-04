@@ -147,19 +147,19 @@ const MyPageCompnent = () => {
                 </thead>
                 <tbody className="text-start">
                   <tr>
-                    <td>전체 보상</td>
+                    <td>전체 보상(원)</td>
                     <td> {userReward.totalRewardReceived ? formatNumber(userReward.totalRewardReceived) : 0}</td>
                   </tr>
                   <tr>
-                    <td>락업 토큰 </td>
+                    <td>락업 금액(원) </td>
                     <td> {userReward.totalLockupQuantity ? formatNumber(userReward.totalLockupQuantity) : 0}</td>
                   </tr>
                   <tr>
-                    <td>락업 해제 토큰 </td>
+                    <td>락업 해제 금액(원) </td>
                     <td> {userReward.totalUnLockupQuantity ? formatNumber(userReward.totalUnLockupQuantity): 0}</td>
                   </tr>
                   <tr>
-                    <td>대기 보상 토큰</td>
+                    <td>대기 보상 금액(원)</td>
                     <td> {userReward.totalPendingReward? formatNumber(userReward.totalPendingReward): 0}</td>
                   </tr>
                 </tbody>
